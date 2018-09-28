@@ -23,36 +23,59 @@ Alter table product_master46 add check(sell_price>0);
 //2. Insertion of values into the tables
 
 insert into clientmaster_46 values('c00001','Ivan bayross','Wandon','Worli','Mumbai',450005,'Maharashtra',15000);
+
 insert into clientmaster_46 values('c00002','Vandana saitwa','Don Street','Bandra','Madras',780001,'TamilNadu',0);
+
 insert into clientmaster_46 values('c00003','Pramadajagust','Mandon','Dabar','Mumbai',450007,'Maharashtra',5000);
+
 insert into clientmaster_46 values('c00004','Basu navindgi','Jerome','juhu','Mumbai',450009,'Maharashtra',0);
+
 insert into clientmaster_46 values('c00005','Ravisreedharan','Dadar','Dadra','Delhi',100003,'Delhi',2000);
+
 insert into clientmaster_46 values('c00006','Rukmini','Rourk','Bandra','Mumbai',4500002,'Maharashtra',0);
 
 insert into product_master46 values('p00001','1.44 flopies',5,'piece',100,20,525,500);
+
 insert into product_master46 values('p03453','Monitors',6,'piece',10,3,12000,11280);
+
 insert into product_master46 values('p45789','Mouse',5,'piece',20,5,1050,1000);
+
 insert into product_master46 values('p44783','Keyboards',5,'piece',100,20,3150,3050);
+
 insert into product_master46 values('p45123','CD Drive',2,'piece',10,3,5250,5100);
+
 insert into product_master46 values('p35412','540 HDD',2.5,'piece',10,3,8400,8000);
 
 insert into sales_master_46 values('s00001','Kiran','1/14','Worli',450001,'Bombay',3000,100,50,'Good');
+
 insert into sales_master_46 values('s00002','Maneesh','j-65','Nariman',450001,'Bombay',3000,200,100,'Good');
+
 insert into sales_master_46 values('s00003','Ravi','p-7','Bandra',450003,'Bombay',3000,200,100,'Good');
+
 insert into sales_master46 values('s00004','Ashish','a/5','Juhu',400041,'Bombay',3000,200,150,'Good');
 
 insert into sales_order46 values('o19001','12-jan-96','c00001','Wandon','s00001','F','N','20-jan-96','in process');
+
 insert into sales_order46 values('o19002','25-jan-96','c00002','Don street','s00002','P','N','27-jan-96','cancelled');
+
 insert into sales_order46 values('o46865','18-feb-96','c00003','Mandon','s00003','F','Y','20-feb-96','fulfilled');
+
 insert into sales_order46 values('o19003','03-apr-96','c00001','Jerome','s00001','F','Y','07-apr-96','fulfilled');
+
 insert into sales_order46 values('o46866','20-may-96','c00004','Dadar','s00002','P','N','22-may-96','cancelled');
+
 insert into sales_order46 values('o19008','24-may-96','c00005','Rourk','s00004','F','N','26-may-96','in process');
 
 insert into Sales_order_details46 values('o19001','p00001',4,4,525);
+
 insert into Sales_order_details46 values('o19002','p00001',10,0,525);
+
 insert into Sales_order_details46 values('o46865','p00001',10,10,525);
+
 insert into Sales_order_details46 values('o46865','p03453',4,4,1050);
+
 insert into Sales_order_details46 values('o19003','p03453',2,2,1050);
+
 insert into Sales_order_details46 values('o19008','p00001',10,5,525);
 
 //3. Computation of table data
@@ -61,7 +84,7 @@ select * from sales_master_46 where Salesman_name like '_a%';
  
 select * from clientmaster_46 where name like 'R%' and city like '%Delhi%';
  
-select name,address1 from clientmaster_46 where city in('delhi','maharashtra');
+select name,address1 from clientmaster_46 where city in('Delhi','Maharashtra');
  
 select * from product_master46 where Cost_price>5000;
  
@@ -73,5 +96,25 @@ select * from product_master46 where Sell_price<2000 and  Sell_price<=5000;
  
 select * from product_master46 where Sell_price<2000 and  Sell_price<=5000;
 
+select count(*) from product_master46;
+ 
+select count(*) from sales_order46 where Order_status='fulfilled';
+ 
+select avg(Cost_price) from product_master46;
 
+//4. Date manipulation
+
+select Order_no,extract(day from Order_date) day from sales_order46;
+ 
+select Order_no,extract(month from Dely_date) month,extract(day from Dely_date) day from sales_order46;
+
+select TO_CHAR( Order_date, 'DD/Mon/YY' ) Order_date from sales_order46;
+ 
+select sysdate+15 from dual;
+ 
+select Dely_date - Order_date from sales_order46;
+
+//5. 
+
+Product_no,Description,Cost_price*Qty_on_hand Total_cost from product_master46;
 
