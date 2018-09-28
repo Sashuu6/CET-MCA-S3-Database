@@ -40,7 +40,7 @@ insert into product_master46 values('p03453','Monitors',6,'piece',10,3,12000,112
 
 insert into product_master46 values('p45789','Mouse',5,'piece',20,5,1050,1000);
 
-insert into product_master46 values('p44783','Keyboards',5,'piece',100,20,3150,3050);
+insert into product_master46 values('p44683','Keyboards',5,'piece',100,20,3150,3050);
 
 insert into product_master46 values('p45123','CD Drive',2,'piece',10,3,5250,5100);
 
@@ -114,7 +114,12 @@ select sysdate+15 from dual;
  
 select Dely_date - Order_date from sales_order46;
 
-//5. 
+//5. Having and Group by clauses
 
-Product_no,Description,Cost_price*Qty_on_hand Total_cost from product_master46;
+select Product_no,Description,Cost_price*Qty_on_hand Total_cost from product_master46;
 
+select sales_order46.client_no,Description,name from Sales_order_details46,Product_master46,sales_order46,client_master46  where client_master46.Client_no=sales_order46.Client_no and sales_order46.Order_no = Sales_order_details46.Order_no and product_master46.Product_no=Sales_order_details46.Product_no; 
+
+select Description from sales_order46,client_master46,sales_order_details46,product_master46 where sales_order_details46.Order_no=sales_order46.order_no and sales_order_details46.Product_no=product_master46.Product_no and sales_order46.Client_no=client_master46.client_no and sales_order46.Dely_addr=client_master46.address1;
+
+select name from sales_order46,client_master46,sales_order_details46  group by sales_order_details46.Order_no having sales_order_details46.Order_no=sales_order46.order_no and sales_order46.Client_no=client_master46.client_no;
