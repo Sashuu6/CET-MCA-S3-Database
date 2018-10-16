@@ -52,7 +52,7 @@ insert into sales_master_46 values('s00002','Maneesh','j-65','Nariman',450001,'B
 
 insert into sales_master_46 values('s00003','Ravi','p-7','Bandra',450003,'Bombay',3000,200,100,'Good');
 
-insert into sales_master46 values('s00004','Ashish','a/5','Juhu',400041,'Bombay',3000,200,150,'Good');
+insert into sales_master_46 values('s00004','Ashish','a/5','Juhu',400041,'Bombay',3000,200,150,'Good');
 
 insert into sales_order46 values('o19001','12-jan-96','c00001','Wandon','s00001','F','N','20-jan-96','in process');
 
@@ -80,46 +80,337 @@ insert into Sales_order_details46 values('o19008','p00001',10,5,525);
 
 //3. Computation of table data
 
-select * from sales_master_46 where Salesman_name like '_a%';
+select Salesman_name from sales_master_46 where Salesman_name like '_a%';
+
+/*
+SALESMAN_NAME
+------------------------------
+Maneesh
+Ravi
+
+*/
  
-select * from clientmaster_46 where name like 'R%' and city like '%Delhi%';
- 
+select name from clientmaster_46 where name like 'R%' and city like '%Delhi%';
+
+/*
+NAME
+------------------------------
+Ravisreedharan
+
+*/
+
 select name,address1 from clientmaster_46 where city in('Delhi','Maharashtra');
+
+/*
+NAME			       ADDRESS1
+------------------------------ ----------------------------------------------------------------------------------------------------
+Ravisreedharan		       Dadar
+
+*/
  
 select * from product_master46 where Cost_price>5000;
+
+/*
+PRODUCT_NO DESCRIPTION	   PROFIT_PERCENT UNIT_MEASU QTY_ON_HAND RECODER_LVL SELL_PRICE COST_PRICE
+---------- --------------- -------------- ---------- ----------- ----------- ---------- ----------
+p03453	   Monitors			6 piece 	      10	   3	  12000      11280
+p45123	   CD Drive			2 piece 	      10	   3	   5250       5100
+p35412	   540 HDD			3 piece 	      10	   3	   8400       8000
+
+*/
  
 select * from sales_order46 where Order_date like '%MAY%';
+
+/*
+ORDER_NO   ORDER_DAT CLIENT_NO	DELY_ADDR	     SALESMAN_N DELY_TYPE  BILLED_YN  DELY_DATE ORDER_STAT
+---------- --------- ---------- -------------------- ---------- ---------- ---------- --------- ----------
+o46866	   20-MAY-96 c00004	Dadar		     s00002	P	   N	      22-MAY-96 cancelled
+o19008	   24-MAY-96 c00005	Rourk		     s00004	F	   N	      26-MAY-96 in process
+
+*/
  
 select * from sales_master_46 where Salesman_no in('s00001','s00002');
- 
-select * from product_master46 where Sell_price<2000 and  Sell_price<=5000;
- 
+
+/*
+SALESM SALESMAN_NAME		      ADDRESS	 CITY			 PINCODE STATE				   SAL_AMT TGT_TO_GET  TTD_SALES REMARSKS
+------ ------------------------------ ---------- -------------------- ---------- ------------------------------ ---------- ---------- ---------- ------------------------------
+s00001 Kiran			      1/14	 Worli			  450001 Bombay 			      3000	  100	      50 Good
+s00002 Maneesh			      j-65	 Nariman		  450001 Bombay 			      3000	  200	     100 Good
+
+*/
+
 select * from product_master46 where Sell_price<2000 and  Sell_price<=5000;
 
+/*
+PRODUCT_NO DESCRIPTION	   PROFIT_PERCENT UNIT_MEASU QTY_ON_HAND RECODER_LVL SELL_PRICE COST_PRICE
+---------- --------------- -------------- ---------- ----------- ----------- ---------- ----------
+p00001	   1.44 flopies 		5 piece 	     100	  20	    525        500
+p45789	   Mouse			5 piece 	      20	   5	   1050       1000
+
+*/
+
+select Product_no,Sell_price,sell_price+((20*Sell_price)/100) new_selling_price from product_master46 where Sell_price>3000;
+
+/*
+PRODUCT_NO SELL_PRICE NEW_SELLING_PRICE
+---------- ---------- -----------------
+p03453		12000		  14400
+p44783		 3150		   3780
+p45123		 5250		   6300
+p35412		 8400		  10080
+
+*/
 select count(*) from product_master46;
+
+/*
+  COUNT(*)
+----------
+	 6
+
+*/
  
 select count(*) from sales_order46 where Order_status='fulfilled';
+
+/*
+  COUNT(*)
+----------
+	 2
+
+*/
  
 select avg(Cost_price) from product_master46;
+
+/*
+AVG(COST_PRICE)
+---------------
+     4821.66667
+
+*/
+
 
 //4. Date manipulation
 
 select Order_no,extract(day from Order_date) day from sales_order46;
+
+/*
+ORDER_NO	  DAY
+---------- ----------
+o19001		   12
+o19002		   25
+o46865		   18
+o19003		    3
+o46866		   20
+o19008		   24
+
+*/
  
 select Order_no,extract(month from Dely_date) month,extract(day from Dely_date) day from sales_order46;
 
-select TO_CHAR( Order_date, 'DD/Mon/YY' ) Order_date from sales_order46;
+/*
+ORDER_NO	MONTH	     DAY
+---------- ---------- ----------
+o19001		    1	      20
+o19002		    1	      27
+o46865		    2	      20
+o19003		    4	       7
+o46866		    5	      22
+o19008		    5	      26
+
+*/
+
+select TO_CHAR( Order_date, 'DD/MM/YY' ) Order_date from sales_order46;
+
+/*
+ORDER_DA
+--------
+12/01/96
+25/01/96
+18/02/96
+03/04/96
+20/05/96
+24/05/96
+
+*/
  
 select sysdate+15 from dual;
  
+/*
+SYSDATE+1
+---------
+30-OCT-18
+
+*/
+
 select Dely_date - Order_date from sales_order46;
+
+/*
+DELY_DATE-ORDER_DATE
+--------------------
+		   8
+		   2
+		   2
+		   4
+		   2
+		   2
+
+*/
+
+/********************************************************************************
+New Table for the next question
+********************************************************************************/
+create table item_order46(name varchar(10),address varchar(10),item varchar(10),price int);
+
+insert into item_order46 values('Basu','Worli','Monitor',100);
+
+insert into item_order46 values('Ivan','Juhu','Keyboard',800);
+
+insert into item_order46 values('Ivan','Worli','Printer',1500);
+
+insert into item_order46 values('Bayross','Wandon','Printer',1500);
+
+insert into item_order46 values('Basu','Dadar','Mouse',500);
+
+insert into item_order46 values('Vandana','Wandon','Monitor',1000);
+
+insert into item_order46 values('Vandana','Wandon','Keyboard',800);
+
+insert into item_order46 values('Bayross','Juhu','Mouse',500);
+
+
+/********************************************************************************
+End
+********************************************************************************/
 
 //5. Having and Group by clauses
 
-select Product_no,Description,Cost_price*Qty_on_hand Total_cost from product_master46;
+select item,sum(price) from item_order46 group by item;
 
-select sales_order46.client_no,Description,name from Sales_order_details46,Product_master46,sales_order46,client_master46  where client_master46.Client_no=sales_order46.Client_no and sales_order46.Order_no = Sales_order_details46.Order_no and product_master46.Product_no=Sales_order_details46.Product_no; 
+/*
+ITEM	   SUM(PRICE)
+---------- ----------
+Printer 	 3000
+Mouse		 1000
+Keyboard	 1600
+Monitor 	 1100
 
-select Description from sales_order46,client_master46,sales_order_details46,product_master46 where sales_order_details46.Order_no=sales_order46.order_no and sales_order_details46.Product_no=product_master46.Product_no and sales_order46.Client_no=client_master46.client_no and sales_order46.Dely_addr=client_master46.address1;
+*/
 
-select name from sales_order46,client_master46,sales_order_details46  group by sales_order_details46.Order_no having sales_order_details46.Order_no=sales_order46.order_no and sales_order46.Client_no=client_master46.client_no;
+select name,item from item_order46 group by (name,item);
+
+/*
+NAME	   ITEM
+---------- ----------
+Basu	   Mouse
+Vandana    Monitor
+Bayross    Printer
+Basu	   Monitor
+Ivan	   Printer
+Vandana    Keyboard
+Bayross    Mouse
+Ivan	   Keyboard
+
+*/
+
+select item,address  from item_order46 group by (item,address);
+
+/*
+ITEM	   ADDRESS
+---------- ----------
+Keyboard   Juhu
+Printer    Worli
+Keyboard   Wandon
+Mouse	   Dadar
+Mouse	   Juhu
+Monitor    Worli
+Monitor    Wandon
+Printer    Wandon
+
+*/
+
+select name,price from item_order46 having price>200 group by(name,price);
+
+/*
+NAME		PRICE
+---------- ----------
+Ivan		  800
+Vandana 	  800
+Vandana 	 1000
+Bayross 	 1500
+Basu		  500
+Ivan		 1500
+Bayross 	  500
+
+*/
+
+//6. Subqueries
+
+select name,address1,address2,city,pincode from clientmaster_46 where client_no=(select client_no from sales_order46 where order_no='o19001');
+
+/*
+NAME			       ADDRESS1
+------------------------------ ----------------------------------------------------------------------------------------------------
+ADDRESS2											     CITY	   PINCODE
+---------------------------------------------------------------------------------------------------- ---------- ----------
+Ivan bayross		       Wandon
+Worli												     Mumbai	    450005
+
+*/
+
+select name from clientmaster_46 where client_no in(select client_no from sales_order46 where order_date<='01-may-1996');
+
+/*
+NAME
+------------------------------
+Ivan bayross
+Vandana saitwa
+Pramadajagust
+
+*/
+
+select client_no,name from clientmaster_46 where client_no in(select client_no from sales_order46 where order_no in(select order_no from sales_order_details46 where product_no=(select product_no from product_master46 where description='1.44 flopies')));
+
+/*
+CLIENT NAME
+------ ------------------------------
+c00001 Ivan bayross
+c00002 Vandana saitwa
+c00003 Pramadajagust
+c00005 Ravisreedharan
+
+*/
+
+select product_no,description from product_master46 where product_no not in(select product_no from sales_order_details46);
+
+/*
+PRODUCT_NO DESCRIPTION
+---------- ---------------
+p35412	   540 HDD
+p44783	   Keyboards
+p45123	   CD Drive
+p45789	   Mouse
+
+*/
+
+select name from clientmaster_46 where client_no in(select client_no from sales_order46 where order_no in(select order_no from sales_order_details46 where qty_ordered*product_rate>=10000));
+
+/*
+no rows selected
+*/
+
+//7. View
+
+create view client46 as  select client_no,name,city from client_master46;
+
+select name,price from item_order46 having price>200 group by(name,price);
+
+/*
+NAME		PRICE
+---------- ----------
+Ivan		  800
+Vandana 	  800
+Vandana 	 1000
+Bayross 	 1500
+Basu		  500
+Ivan		 1500
+Bayross 	  500
+*/
