@@ -1,2 +1,6 @@
 source /etc/profile.d/dbase.sh
 db
+
+to run pl programs
+set serveroutput on
+ @/var/nfs/.home/mca2017/mca1746/CET-MCA-S3-Database/cycle_2/
