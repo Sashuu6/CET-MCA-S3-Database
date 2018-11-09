@@ -1,9 +1,12 @@
-DECLARE
-  	n number :=&n ;
-	factorial number :=1;
-BEGIN
-	for i in 1..n
-	loop
-	factorial := factorial*i;
-	end loop;
-             dbms_output.put_line('FACTORIAL = '||factorial); 
+DECLARE 
+	i INTEGER := 1 ; 
+	n number;
+	fac INTEGER := 1 ; 
+BEGIN 
+	n := &n; 
+	FOR i IN  1..n LOOP  
+		fac := fac * i;
+	END LOOP; 
+	dbms_output.put_line('The factorial of ' || n || ' is ' || fac);
+END; 
+/

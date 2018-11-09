@@ -9,6 +9,6 @@ begin
 			sum1 := sum1 + i;
 		end if;
 	end loop;
-	dbms_output.put_line(sum1);
+	dbms_output.put_line('The sum of first ' || n || ' odd numbers is ' || sum1);
 end;
 /

@@ -11,5 +11,6 @@ BEGIN
     loop
         rev:=rev || substr(str,i,1);
     end loop;
-    dbms_output.put_line('Reverse of the string is:'||rev);
+    dbms_output.put_line('The reverse of the string "' || str || '" is ' || rev);
 END;
+/
