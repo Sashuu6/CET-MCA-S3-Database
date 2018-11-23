@@ -1,7 +1,7 @@
 CREATE OR REPLACE PROCEDURE lab1(x in varchar, y in number)
 iS 
   CURSOR client_master46 is 
-      SELECT name FROM client_master77; 
+      SELECT name FROM client_master46; 
 	name varchar(20);
 	v varchar(1);
 BEGIN
@@ -18,10 +18,3 @@ OPEN client_master46;
 END; 
 /
 
-/*
-SQL> @lab1.sql
-
-Procedure created.
-
-
-*/

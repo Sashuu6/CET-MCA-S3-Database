@@ -12,11 +12,3 @@ BEGIN
   dbms_output.put_line(min1||' is the Minimum value');
 END; 
 /
-
-/*
-
-SQL> @/var/nfs/.home/mca2017/mca1756/varna/s3/pl_sql/proce2.sql
-
-Procedure created.
-
-*/

@@ -7,9 +7,4 @@ BEGIN
     return total_billed;
 END;
 /
-/*
-SQL> @/var/nfs/.home/mca2017/mca1756/varna/s3/pl_sql/function13.sql 
 
-Function created.
-
-*/
